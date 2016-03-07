@@ -1,6 +1,13 @@
-//
-// Created by Chau Nguyen on 2/26/16.
-//
+/*
+	Nguyen, Chau
+	Nguyen, Allan
+	Mulkey, Ashton
+	CS A250
+	March 7, 2016
+
+	Project 1
+*/
+// Interface for CandidateType class
 
 #ifndef PROJECT_CANDIDATETYPE_H
 #define PROJECT_CANDIDATETYPE_H
@@ -32,10 +39,10 @@ public:
     void printCandidateDivisionVotes(int divisionNumber) const;
 
     ~CandidateType(); // deconstructor
+
 private:
     int totalNumOfVotes;
     int array[NUM_OF_DIVISIONS]; // does this have to be a dynamic array?
 };
-
 
 #endif //PROJECT_CANDIDATETYPE_H

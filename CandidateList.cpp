@@ -1,3 +1,7 @@
+//
+// Created by Chau Nguyen on 3/5/16.
+//
+
 #include "CandidateList.h"
 
 // Function definitions
@@ -30,6 +34,7 @@ void CandidateList::addCandidate(CandidateType &c)
 		count++;
 	}
 }
+
 int CandidateList::getWinner() const
 {
 	if (first == NULL)
@@ -81,6 +86,7 @@ void CandidateList::printCandidateName(int ssn) const
 			cout << "SSN not in the list." << endl;
 	}
 }
+
 void CandidateList::printAllCandidates() const
 {
 	if (first == NULL)
@@ -119,6 +125,7 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 			<< current->getCandidate().CandidateType::getVotesByDivision(divisionNumber) << endl;
 	}
 }
+
 void CandidateList::printCandidateTotalVotes(int ssn) const
 {
 	if (first == NULL)

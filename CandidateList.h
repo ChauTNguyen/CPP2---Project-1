@@ -1,3 +1,14 @@
+/*
+	Nguyen, Chau
+	Nguyen, Allan
+	Mulkey, Ashton
+	CS A250
+	March 7, 2016
+
+	Project 1
+*/
+// Interface for CandidateList Class. Allows you to manipulate a list of Candidate objects.
+
 #ifndef CANDIDATELIST_H
 #define CANDIDATELIST_H
 

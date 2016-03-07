@@ -1,3 +1,14 @@
+/*
+	Nguyen, Chau
+	Nguyen, Allan
+	Mulkey, Ashton
+	CS A250
+	March 7, 2016
+
+	Project 1
+*/
+// Handles the input.
+
 #include "CandidateList.h"
 #include "InputHandler.h"
 

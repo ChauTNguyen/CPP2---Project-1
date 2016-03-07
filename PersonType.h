@@ -1,3 +1,14 @@
+/*
+	Nguyen, Chau
+	Nguyen, Allan
+	Mulkey, Ashton
+	CS A250
+	March 7, 2016
+
+	Project 1
+*/
+// Interface for PersonType class. Parent of the CandidateType.
+
 #ifndef PERSONTYPE_H
 #define PERSONTYPE_H
 
