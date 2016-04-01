@@ -1,7 +1,3 @@
-//
-// Created by Chau Nguyen on 2/8/2016.
-//
-
 #include "PersonType.h"
 
 PersonType::PersonType()

@@ -1,7 +1,3 @@
-//
-// Created by Chau Nguyen on 3/5/16.
-//
-
 #include "CandidateList.h"
 
 // Function definitions
@@ -146,6 +142,67 @@ void CandidateList::printCandidateTotalVotes(int ssn) const
 		if (found)
 			cout << "Total Votes: " << current->getCandidate().CandidateType::getTotalVotes();
 	}
+}
+
+void CandidateList::printFinalResults() const
+{
+	Node *current = first;
+	Node *currentMax = first;
+	Node *previousMax = first; // Used to make us skip nodes that we already printed out.
+	int max = 0;
+
+	for (int i = 0; i < count; i++)
+	{
+		if (i == 0) // Find the absolute maximum of the list. Prints 278.
+		{
+			while (current != NULL)
+			{
+				if (current->getCandidate().getTotalVotes() > max)
+				{
+					previousMax = current;
+					max = previousMax->getCandidate().getTotalVotes();
+				}
+				current = current->getLink();
+			}
+		}
+		else // Find the relative maximums, crossing out the ones we already used. 233 -> 221 -> 173 -> and so on...
+		{
+			while (current != NULL)
+			{
+				if (current->getCandidate().getTotalVotes() < previousMax->getCandidate().getTotalVotes()
+					&& current->getCandidate().getTotalVotes() > max)
+				{
+					currentMax = current;
+					max = current->getCandidate().getTotalVotes();
+				}
+				current = current->getLink();
+			}
+			previousMax = currentMax;
+		}
+		
+		// Format and prints the current max.
+		if (count - i < 10)
+			cout << ' ' << (count - i) << "  ";
+		else
+			cout << count - i << "  ";
+		if (max < 100)
+			cout << max << " ";
+		else
+			cout << max;
+		cout << " ";
+		previousMax->getCandidate().printName();
+		cout << endl;
+
+		// Reset the variables. Do not reset previousMax, we use that to weed out the nodes that were already printed.
+		current = first;
+		currentMax = first;
+		max = 0;
+	}
+	// Move pointers to the end and safely delete them.
+	current = last->getLink();
+	currentMax = last->getLink();
+	previousMax = last->getLink();
+	current = currentMax = previousMax = NULL;
 }
 
 void CandidateList::destroyList()

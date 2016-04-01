@@ -1,7 +1,3 @@
-//
-// Created by Chau Nguyen on 2/26/16.
-//
-
 #include "CandidateType.h"
 
 /*

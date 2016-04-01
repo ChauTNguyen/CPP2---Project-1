@@ -45,6 +45,7 @@ public:
 	void printAllCandidates() const;
 	void printCandidateDivisionVotes(int ssn, int divisionNumber) const;
 	void printCandidateTotalVotes(int ssn) const;
+	void printFinalResults() const;
 
 	void destroyList();
 	~CandidateList();
