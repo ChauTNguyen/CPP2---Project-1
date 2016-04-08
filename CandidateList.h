@@ -1,22 +1,12 @@
-/*
-	Nguyen, Chau
-	Nguyen, Allan
-	Mulkey, Ashton
-	CS A250
-	March 7, 2016
-
-	Project 1
-*/
 // Interface for CandidateList Class. Allows you to manipulate a list of Candidate objects.
 
 #ifndef CANDIDATELIST_H
 #define CANDIDATELIST_H
 
 #include "CandidateType.h"
+
 #include <iostream>
 #include <string>
-
-using namespace std;
 
 class Node
 {
@@ -38,7 +28,7 @@ class CandidateList
 public:
 	CandidateList();
 
-	void addCandidate(CandidateType &c);
+	void addCandidate(const CandidateType &c);
 	int getWinner() const;
 
 	void printCandidateName(int ssn) const;
