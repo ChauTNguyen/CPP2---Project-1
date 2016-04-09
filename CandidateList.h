@@ -28,12 +28,8 @@ class CandidateList
 public:
 	CandidateList();
 
-<<<<<<< HEAD
-	void addCandidate(const CandidateType& c);
-	
-=======
 	void addCandidate(const CandidateType &c);
->>>>>>> origin/master
+
 	int getWinner() const;
 
 	void printCandidateName(int ssn) const;
