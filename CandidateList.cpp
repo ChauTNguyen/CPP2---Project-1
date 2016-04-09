@@ -29,18 +29,7 @@ int CandidateList::getWinner() const
 	else
 	{
 		Node *current = first;
-		/*Node *highest = first;
-		int highestNumberOfVotes = current->getCandidate().getTotalVotes();
-		while (current != NULL)
-		{
-			if (current->getCandidate().getTotalVotes() > highestNumberOfVotes)
-			{
-				highest = current;
-				highestNumberOfVotes = highest->getCandidate().getTotalVotes();
-			}
-			current = current->getLink();
-		}
-		return highest->getCandidate().getSSN();*/
+
 		int highestNumberOfVotes = current->getCandidate().getTotalVotes();
 		int ssn = current->getCandidate().getSSN();
 
@@ -80,11 +69,9 @@ void CandidateList::printCandidateName(int ssn) const
 		}
 
 		if (found)
-		{
 			current->getCandidate().printName();
-		}
 		else
-			cerr << "SSN not in the list." << endl;
+			cerr << "SSN not in the list.";
 	}
 }
 
@@ -145,7 +132,7 @@ void CandidateList::printCandidateTotalVotes(int ssn) const
 		}
 
 		if (found)
-			cout << "Total Votes: " << current->getCandidate().getTotalVotes();
+			cout << "Total Votes: " << current->getCandidate().getTotalVotes() << endl;
 	}
 }
 
@@ -157,6 +144,8 @@ void CandidateList::printFinalResults() const
 	
 	int max = 0;
 
+	cout << "\nFINAL RESULTS" << "\n-------------" << endl;
+		
 	for (int i = 0; i < count; i++)
 	{
 		if (i == 0) // Find the absolute maximum of the list. Prints 278.
