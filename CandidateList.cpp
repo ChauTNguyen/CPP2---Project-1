@@ -7,7 +7,11 @@ CandidateList::CandidateList()
 	count = 0;
 }
 
+<<<<<<< HEAD
 void CandidateList::addCandidate(const CandidateType& c)
+=======
+void CandidateList::addCandidate(const CandidateType &c)
+>>>>>>> origin/master
 {
 	if (first == NULL)
 		first = last = new Node(c, NULL);
@@ -51,12 +55,23 @@ int CandidateList::getWinner() const
 			{
 				highestNumberOfVotes = current->getCandidate().getTotalVotes();
 				ssn = current->getCandidate().getSSN();
+<<<<<<< HEAD
 				
 				current = current->getLink();
 			}
 			else
 				current = current->getLink();
 		}
+=======
+				current = current->getLink();
+			}
+			else
+			{
+				current = current->getLink();
+			}
+		}
+
+>>>>>>> origin/master
 		return ssn;
 	}
 	
@@ -73,16 +88,24 @@ void CandidateList::printCandidateName(int ssn) const
 		 
 		while (current != NULL && !found)
 		{
-			if (current->getCandidate().PersonType::getSSN() == ssn)
+			if (current->getCandidate().getSSN() == ssn)
 				found = true;
 			else
 				current = current->getLink();
 		}
 
 		if (found)
+<<<<<<< HEAD
 			current->getCandidate().PersonType::printName();
 		else
 			cerr << "SSN not in the list.";
+=======
+		{
+			current->getCandidate().printName();
+		}
+		else
+			cerr << "SSN not in the list." << endl;
+>>>>>>> origin/master
 	}
 }
 
@@ -143,7 +166,11 @@ void CandidateList::printCandidateTotalVotes(int ssn) const
 		}
 
 		if (found)
+<<<<<<< HEAD
 			cout << "Total Votes: " << current->getCandidate().getTotalVotes() << endl;
+=======
+			cout << "Total Votes: " << current->getCandidate().getTotalVotes();
+>>>>>>> origin/master
 	}
 }
 
