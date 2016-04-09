@@ -1,12 +1,3 @@
-/*
-	Nguyen, Chau
-	Nguyen, Allan
-	Mulkey, Ashton
-	CS A250
-	March 7, 2016
-
-	Project 1
-*/
 // Interface for CandidateType class
 
 #ifndef PROJECT_CANDIDATETYPE_H

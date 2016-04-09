@@ -51,7 +51,8 @@ int CandidateType::getVotesByDivision(int divisionNumber) const
 void CandidateType::printCandidateInfo() const
 {
     printSSN();
-	cout << " - " << getLastName() << " " << getFirstName() << endl;
+	printName();
+    cout << endl;
 }
 
 /*
@@ -59,8 +60,8 @@ void CandidateType::printCandidateInfo() const
  */
 void CandidateType::printCandidateTotalVotes() const
 {
-    cout << getLastName() << ", " << getFirstName() << endl;
-    cout << "\tTotal Votes (all divisions): " << getTotalVotes() << endl;  // check if tab is right later
+    printName();
+    cout << "\n\tTotal Votes (all divisions): " << getTotalVotes() << endl;  // check if tab is right later
 }
 
 /*
@@ -70,8 +71,8 @@ void CandidateType::printCandidateTotalVotes() const
  */
 void CandidateType::printCandidateDivisionVotes(int divisionNumber) const
 {
-    cout << getLastName() << ", " << getFirstName() << endl;
-    cout << "\tDivision " << divisionNumber << " total votes: " << getVotesByDivision(divisionNumber) << endl;
+    printName();
+    cout << "\n\tDivision " << divisionNumber << " total votes: " << getVotesByDivision(divisionNumber) << endl;
 }
 
 /*
