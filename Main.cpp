@@ -86,7 +86,6 @@ void processChoice(CandidateList &candidateList) {
                 cout << endl;
                 candidateList.printCandidateTotalVotes(ssn);
 				cout << endl;
-				cout << endl;
 				system("Pause");
                 break;
 
@@ -103,7 +102,6 @@ void processChoice(CandidateList &candidateList) {
                 else {
                     cout << "\nThere are no candidates." << endl;
                 }
-				cout << endl;
 				system("Pause");
                 break;
 

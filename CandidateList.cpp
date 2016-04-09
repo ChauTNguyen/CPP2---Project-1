@@ -3,32 +3,20 @@
 // Function definitions
 CandidateList::CandidateList()
 {
-	first = NULL;
-	last = NULL;
+	first = last = NULL;
 	count = 0;
 }
 
-void CandidateList::addCandidate(CandidateType &c)
+void CandidateList::addCandidate(const CandidateType& c)
 {
 	if (first == NULL)
-	{
-		Node *newNode = new Node(c, NULL);
-		first = newNode;
-		last = newNode;
-		count++;
-	}
+		first = last = new Node(c, NULL);
 	else
 	{
-		Node *current = first;
-
-		while (current->getLink() != NULL)
-			current = current->getLink();
-
-		Node *newNode = new Node(c, NULL);
-		current->setLink(newNode);
-		last = newNode;
-		count++;
+		last->setLink(new Node(c, NULL));
+		last = last->getLink();
 	}
+	++count;
 }
 
 int CandidateList::getWinner() const
@@ -36,25 +24,42 @@ int CandidateList::getWinner() const
 	if (first == NULL)
 	{
 		cerr << "List is empty." << endl;
-		return 0;
+		return -1;
 	}
 	else
 	{
 		Node *current = first;
-		Node *highest = first;
-		int highestNumberOfVotes = 0;
+		/*Node *highest = first;
+		int highestNumberOfVotes = current->getCandidate().getTotalVotes();
 
 		while (current != NULL)
 		{
-			if (current->getCandidate().CandidateType::getTotalVotes() > highestNumberOfVotes)
+			if (current->getCandidate().getTotalVotes() > highestNumberOfVotes)
 			{
 				highest = current;
-				highestNumberOfVotes = highest->getCandidate().CandidateType::getTotalVotes();
+				highestNumberOfVotes = highest->getCandidate().getTotalVotes();
 			}
 			current = current->getLink();
 		}
-		return highest->getCandidate().PersonType::getSSN();
+		return highest->getCandidate().getSSN();*/
+		int highestNumberOfVotes = current->getCandidate().getTotalVotes();
+		int ssn = current->getCandidate().getSSN();
+		
+		while (current != NULL)
+		{
+			if (current->getCandidate().getTotalVotes() > highestNumberOfVotes)
+			{
+				highestNumberOfVotes = current->getCandidate().getTotalVotes();
+				ssn = current->getCandidate().getSSN();
+				
+				current = current->getLink();
+			}
+			else
+				current = current->getLink();
+		}
+		return ssn;
 	}
+	
 }
 
 void CandidateList::printCandidateName(int ssn) const
@@ -75,11 +80,9 @@ void CandidateList::printCandidateName(int ssn) const
 		}
 
 		if (found)
-		{
 			current->getCandidate().PersonType::printName();
-		}
 		else
-			cout << "SSN not in the list." << endl;
+			cerr << "SSN not in the list.";
 	}
 }
 
@@ -93,7 +96,7 @@ void CandidateList::printAllCandidates() const
 
 		while (current != NULL)
 		{
-			current->getCandidate().CandidateType::printCandidateInfo();
+			current->getCandidate().printCandidateInfo();
 			current = current->getLink();
 		}
 	}
@@ -110,7 +113,7 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 
 		while (current != NULL && !found)
 		{
-			if (current->getCandidate().PersonType::getSSN() == ssn)
+			if (current->getCandidate().getSSN() == ssn)
 				found = true;
 			else
 				current = current->getLink();
@@ -118,7 +121,7 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 
 		if (found)
 			cout << "Division " << divisionNumber << ": "
-			<< current->getCandidate().CandidateType::getVotesByDivision(divisionNumber) << endl;
+			<< current->getCandidate().getVotesByDivision(divisionNumber) << endl;
 	}
 }
 
@@ -133,14 +136,14 @@ void CandidateList::printCandidateTotalVotes(int ssn) const
 
 		while (current != NULL && !found)
 		{
-			if (current->getCandidate().CandidateType::getSSN() == ssn)
+			if (current->getCandidate().getSSN() == ssn)
 				found = true;
 			else
 				current = current->getLink();
 		}
 
 		if (found)
-			cout << "Total Votes: " << current->getCandidate().CandidateType::getTotalVotes();
+			cout << "Total Votes: " << current->getCandidate().getTotalVotes() << endl;
 	}
 }
 
@@ -149,6 +152,7 @@ void CandidateList::printFinalResults() const
 	Node *current = first;
 	Node *currentMax = first;
 	Node *previousMax = first; // Used to make us skip nodes that we already printed out.
+	
 	int max = 0;
 
 	for (int i = 0; i < count; i++)
@@ -213,7 +217,7 @@ void CandidateList::destroyList()
 	{
 		Node *temp;
 		
-		while (first->getLink() != NULL)
+		while (first != NULL)
 		{
 			temp = first;
 			first = first->getLink();

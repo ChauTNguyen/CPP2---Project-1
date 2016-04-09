@@ -13,6 +13,14 @@ PersonType::PersonType(const string& newFirst,
 	ssn = newSSN;
 }
 
+void PersonType::setPersonInfo(const string& newFirst,
+	const string& newLast, int newSSN)
+{
+	firstName = newFirst;
+	lastName = newLast;
+	ssn = newSSN;
+}
+
 string PersonType::getFirstName() const
 {
 	return firstName;
@@ -25,16 +33,7 @@ string PersonType::getLastName() const
 
 int PersonType::getSSN() const
 {
-	// Does not format SSN
 	return ssn;
-}
-
-void PersonType::setPersonInfo(const string& newFirst,
-	const string& newLast, int newSSN)
-{
-	firstName = newFirst;
-	lastName = newLast;
-	ssn = newSSN;
 }
 
 void PersonType::printName() const
@@ -50,7 +49,6 @@ void PersonType::printPersonInfo() const
 
 void PersonType::printSSN() const
 {
-	// Formats the SSN
 	cout << ssn / 100000000 << (ssn / 10000000) % 10 << (ssn / 1000000) % 10
 		 << "-" << (ssn / 100000) % 10 << (ssn / 10000) % 10 << "-" << (ssn / 1000) % 10
 		 << (ssn / 100) % 10 << (ssn / 10) % 10 << ssn % 10;
@@ -58,5 +56,5 @@ void PersonType::printSSN() const
 
 PersonType::~PersonType()
 {
-	// empty
+
 }
