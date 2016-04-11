@@ -5,6 +5,8 @@
 
 #include "PersonType.h"
 
+using namespace std;
+
 const int NUM_OF_DIVISIONS = 4;
 
 class CandidateType : public PersonType {

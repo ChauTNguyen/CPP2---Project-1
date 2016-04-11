@@ -1,6 +1,5 @@
 #include "CandidateList.h"
 
-// Function definitions
 CandidateList::CandidateList()
 {
 	first = last = NULL;
@@ -28,17 +27,17 @@ int CandidateList::getWinner() const
 	}
 	else
 	{
-		Node *current = first;
-
-		int highestNumberOfVotes = current->getCandidate().getTotalVotes();
-		int ssn = current->getCandidate().getSSN();
+		Node *current = first->getLink(); // no need to check the first node with current
+										  // because the default max is the first node's amount of votes
+		int highestNumberOfVotes = first->getCandidate().getTotalVotes();
+		int ssnWithMostVotes = first->getCandidate().getSSN();
 
 		while (current != NULL)
 		{
 			if (current->getCandidate().getTotalVotes() > highestNumberOfVotes)
 			{
 				highestNumberOfVotes = current->getCandidate().getTotalVotes();
-				ssn = current->getCandidate().getSSN();
+				ssnWithMostVotes = current->getCandidate().getSSN();
 
 				current = current->getLink();
 			}
@@ -46,9 +45,8 @@ int CandidateList::getWinner() const
 				current = current->getLink();
 		}
 
-		return ssn;
+		return ssnWithMostVotes;
 	}
-
 }
 
 void CandidateList::printCandidateName(int ssn) const
@@ -109,8 +107,10 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 		}
 
 		if (found)
+		{
 			cout << "Division " << divisionNumber << ": "
-			<< current->getCandidate().getVotesByDivision(divisionNumber) << endl;
+				 << current->getCandidate().getVotesByDivision(divisionNumber) << endl;
+		}
 	}
 }
 

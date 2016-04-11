@@ -5,9 +5,6 @@
 
 #include "CandidateType.h"
 
-#include <iostream>
-#include <string>
-
 class Node
 {
 public:

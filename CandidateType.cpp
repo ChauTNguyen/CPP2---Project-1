@@ -51,6 +51,7 @@ int CandidateType::getVotesByDivision(int divisionNumber) const
 void CandidateType::printCandidateInfo() const
 {
     printSSN();
+	cout << " - ";
 	printName();
     cout << endl;
 }

@@ -13,11 +13,11 @@ class PersonType
 public:
 	PersonType(); // default constructor
 	PersonType(const string& newFirst, const string& newLast,
-		int newSSN);
+			   int newSSN);
 
 	// setter functions
-	void setPersonInfo(const string& newFirst,
-		const string& newLast, int newSSN);
+	void setPersonInfo(const string& newFirst, const string& newLast,
+					   int newSSN);
 
 	// getter functions
 	string getFirstName() const;
