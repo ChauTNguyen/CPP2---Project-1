@@ -1,9 +1,11 @@
-// Interface for CandidateType class
+// Interface for CandidateType class, child of PersonType
 
 #ifndef PROJECT_CANDIDATETYPE_H
 #define PROJECT_CANDIDATETYPE_H
 
 #include "PersonType.h"
+
+using namespace std;
 
 const int NUM_OF_DIVISIONS = 4;
 

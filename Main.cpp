@@ -53,7 +53,7 @@ void processChoice(CandidateList &candidateList) {
     while (choice > 0 && choice < 6) {
         string fName, lName;
         int division = 0,
-                ssn = 0;
+                 ssn = 0;
 
         switch (choice) {
             // Print all candidates

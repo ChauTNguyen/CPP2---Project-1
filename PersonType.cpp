@@ -5,16 +5,16 @@ PersonType::PersonType()
 	ssn = 0;
 }
 
-PersonType::PersonType(const string& newFirst,
-	const string& newLast, int newSSN)
+PersonType::PersonType(const string& newFirst, const string& newLast,
+					   int newSSN)
 {
 	firstName = newFirst;
 	lastName = newLast;
 	ssn = newSSN;
 }
 
-void PersonType::setPersonInfo(const string& newFirst,
-	const string& newLast, int newSSN)
+void PersonType::setPersonInfo(const string& newFirst, const string& newLast,
+							   int newSSN)
 {
 	firstName = newFirst;
 	lastName = newLast;

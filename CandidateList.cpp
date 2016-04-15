@@ -1,9 +1,9 @@
 #include "CandidateList.h"
 
-// Function definitions
 CandidateList::CandidateList()
 {
-	first = last = NULL;
+	first = NULL;
+	last = NULL;
 	count = 0;
 }
 
@@ -28,17 +28,17 @@ int CandidateList::getWinner() const
 	}
 	else
 	{
-		Node *current = first;
-
-		int highestNumberOfVotes = current->getCandidate().getTotalVotes();
-		int ssn = current->getCandidate().getSSN();
+		Node *current = first->getLink(); // no need to check the first node with current
+										  // because the default max is the first node's amount of votes
+		int highestNumberOfVotes = first->getCandidate().getTotalVotes();
+		int ssnWithMostVotes = first->getCandidate().getSSN();
 
 		while (current != NULL)
 		{
 			if (current->getCandidate().getTotalVotes() > highestNumberOfVotes)
 			{
 				highestNumberOfVotes = current->getCandidate().getTotalVotes();
-				ssn = current->getCandidate().getSSN();
+				ssnWithMostVotes = current->getCandidate().getSSN();
 
 				current = current->getLink();
 			}
@@ -46,9 +46,10 @@ int CandidateList::getWinner() const
 				current = current->getLink();
 		}
 
-		return ssn;
-	}
+		current = NULL;
 
+		return ssnWithMostVotes;
+	}
 }
 
 void CandidateList::printCandidateName(int ssn) const
@@ -72,6 +73,8 @@ void CandidateList::printCandidateName(int ssn) const
 			current->getCandidate().printName();
 		else
 			cerr << "SSN not in the list.";
+
+		current = NULL;
 	}
 }
 
@@ -88,6 +91,8 @@ void CandidateList::printAllCandidates() const
 			current->getCandidate().printCandidateInfo();
 			current = current->getLink();
 		}
+
+		current = NULL;
 	}
 }
 
@@ -109,8 +114,12 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 		}
 
 		if (found)
+		{
 			cout << "Division " << divisionNumber << ": "
-			<< current->getCandidate().getVotesByDivision(divisionNumber) << endl;
+				 << current->getCandidate().getVotesByDivision(divisionNumber) << endl;
+		}
+
+		current = NULL;
 	}
 }
 
@@ -133,14 +142,16 @@ void CandidateList::printCandidateTotalVotes(int ssn) const
 
 		if (found)
 			cout << "Total Votes: " << current->getCandidate().getTotalVotes() << endl;
+
+		current = NULL;
 	}
 }
 
 void CandidateList::printFinalResults() const
 {
 	Node *current = first;
-	Node *currentMax = first;
-	Node *previousMax = first; // Used to make us skip nodes that we already printed out.
+	Node *currentMax = first; // the current max within a single while loop iteration
+	Node *previousMax = first; // used to make us ignore nodes that we already printed out (all numbers must be below the previousMax)
 	
 	int max = 0;
 
@@ -172,7 +183,7 @@ void CandidateList::printFinalResults() const
 				}
 				current = current->getLink();
 			}
-			previousMax = currentMax;
+			previousMax = currentMax; // save the value for the next iteration
 		}
 		
 		// Format and prints the current max.
@@ -188,15 +199,12 @@ void CandidateList::printFinalResults() const
 		previousMax->getCandidate().printName();
 		cout << endl;
 
-		// Reset the variables. Do not reset previousMax, we use that to weed out the nodes that were already printed.
+		// Reset the variables. Do not reset previousMax, we use that to ignore the nodes that were already printed.
 		current = first;
 		currentMax = first;
 		max = 0;
 	}
-	// Move pointers to the end and safely delete them.
-	current = last->getLink();
-	currentMax = last->getLink();
-	previousMax = last->getLink();
+	
 	current = currentMax = previousMax = NULL;
 }
 

@@ -1,12 +1,9 @@
-// Interface for CandidateList Class. Allows you to manipulate a list of Candidate objects.
+// Interface for CandidateList Class. Allows you to manipulate a list of CandidateType objects.
 
 #ifndef CANDIDATELIST_H
 #define CANDIDATELIST_H
 
 #include "CandidateType.h"
-
-#include <iostream>
-#include <string>
 
 class Node
 {
