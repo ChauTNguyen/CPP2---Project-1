@@ -46,8 +46,11 @@ int CandidateList::getWinner() const
 				current = current->getLink();
 		}
 
+<<<<<<< HEAD
 		current = NULL;
 
+=======
+>>>>>>> origin/master
 		return ssnWithMostVotes;
 	}
 }
@@ -118,8 +121,11 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 			cout << "Division " << divisionNumber << ": "
 				 << current->getCandidate().getVotesByDivision(divisionNumber) << endl;
 		}
+<<<<<<< HEAD
 
 		current = NULL;
+=======
+>>>>>>> origin/master
 	}
 }
 
