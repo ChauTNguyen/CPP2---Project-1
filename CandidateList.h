@@ -5,25 +5,15 @@
 
 #include "CandidateType.h"
 
-class Node
-{
-public:
-	Node(){}
-    Node(const CandidateType& votes, Node *theLink) 
-		: candidate(votes), link(theLink){}
-    Node* getLink( ) const { return link; }
-	CandidateType getCandidate( ) const { return candidate; }
-    void setCandidate(const CandidateType& votes) { candidate = votes; }
-    void setLink(Node *theLink) { link = theLink; }
-private:
-    CandidateType candidate;
-    Node *link;		//pointer that points to next node
-};
+#include <vector>
 
 class CandidateList
 {
 public:
 	CandidateList();
+
+	bool isEmpty() const;
+	bool searchCandidate(int ssn) const;
 
 	void addCandidate(const CandidateType &c);
 
@@ -35,13 +25,12 @@ public:
 	void printCandidateTotalVotes(int ssn) const;
 	void printFinalResults() const;
 
-	void destroyList();
 	~CandidateList();
 	
 private:
-	Node *first; 	// pointer to point to the first candidate in the list
-	Node *last;		// pointer to point to last candidate in the list
-	int count;		// keeps track of number of candidates in the list
+	vector<CandidateType> candidates;
+
+	bool searchCandidateList(int ssn, vector<CandidateType>::const_iterator& vecIter) const;
 };
 
 #endif

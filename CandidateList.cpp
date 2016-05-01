@@ -2,234 +2,177 @@
 
 CandidateList::CandidateList()
 {
-	first = NULL;
-	last = NULL;
-	count = 0;
+
+}
+
+bool CandidateList::isEmpty() const
+{
+	return candidates.empty();
+}
+
+bool CandidateList::searchCandidate(int ssn) const
+{
+	vector<CandidateType>::const_iterator vecIter;
+	return searchCandidateList(ssn, vecIter);
+}
+
+bool CandidateList::searchCandidateList
+	(int ssn, vector<CandidateType>::const_iterator& vecIter) const
+{
+	vecIter = candidates.begin();
+	bool found = false;
+
+	while (!found && vecIter != candidates.end())
+	{
+		if (vecIter->getSSN() == ssn)
+			found = true;
+		else
+			vecIter++;
+	}
+
+	if (found)
+		return true;
+	else
+		return false;
 }
 
 void CandidateList::addCandidate(const CandidateType &c)
 {
-	if (first == NULL)
-		first = last = new Node(c, NULL);
-	else
-	{
-		last->setLink(new Node(c, NULL));
-		last = last->getLink();
-	}
-	++count;
+	candidates.push_back(c);
 }
 
 int CandidateList::getWinner() const
 {
-	if (first == NULL)
+	vector<CandidateType>::const_iterator vecIter;
+
+	// make the max the first element of the vector
+	// to save a wee bit of time
+	vector<CandidateType>::const_iterator iteratorWithHighestNumOfVotes = candidates.begin();
+	int max = iteratorWithHighestNumOfVotes->getTotalVotes();
+
+	// make sure to start at the second element
+	for (vecIter = candidates.begin() + 1; vecIter != candidates.end(); vecIter++)
 	{
-		cerr << "List is empty." << endl;
-		return -1;
+		if (vecIter->getTotalVotes() > max)
+			iteratorWithHighestNumOfVotes = vecIter;
 	}
-	else
-	{
-		Node *current = first->getLink(); // no need to check the first node with current
-										  // because the default max is the first node's amount of votes
-		int highestNumberOfVotes = first->getCandidate().getTotalVotes();
-		int ssnWithMostVotes = first->getCandidate().getSSN();
 
-		while (current != NULL)
-		{
-			if (current->getCandidate().getTotalVotes() > highestNumberOfVotes)
-			{
-				highestNumberOfVotes = current->getCandidate().getTotalVotes();
-				ssnWithMostVotes = current->getCandidate().getSSN();
-
-				current = current->getLink();
-			}
-			else
-				current = current->getLink();
-		}
-
-		current = NULL;
-
-		return ssnWithMostVotes;
-	}
+	return iteratorWithHighestNumOfVotes->getSSN();
 }
 
 void CandidateList::printCandidateName(int ssn) const
 {
-	if (first == NULL)
-		cerr << "List is empty." << endl;
-	else
-	{
-		Node *current = first;
-		bool found = false;
+	vector<CandidateType>::const_iterator vecIter;
 
-		while (current != NULL && !found)
-		{
-			if (current->getCandidate().getSSN() == ssn)
-				found = true;
-			else
-				current = current->getLink();
-		}
-
-		if (found)
-			current->getCandidate().printName();
-		else
-			cerr << "SSN not in the list.";
-
-		current = NULL;
-	}
+	if (searchCandidateList(ssn, vecIter))
+		vecIter->printName();
 }
 
 void CandidateList::printAllCandidates() const
 {
-	if (first == NULL)
-		cerr << "List is empty." << endl;
-	else
-	{
-		Node *current = first;
+	vector<CandidateType>::const_iterator vecIter;
 
-		while (current != NULL)
-		{
-			current->getCandidate().printCandidateInfo();
-			current = current->getLink();
-		}
-
-		current = NULL;
-	}
+	for (vecIter = candidates.begin(); vecIter != candidates.end(); vecIter++)
+		vecIter->printCandidateInfo();
 }
 
 void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) const
 {
-	if (first == NULL)
-		cerr << "List is empty." << endl;
-	else
-	{
-		Node *current = first;
-		bool found = false;
+	vector<CandidateType>::const_iterator vecIter;
 
-		while (current != NULL && !found)
-		{
-			if (current->getCandidate().getSSN() == ssn)
-				found = true;
-			else
-				current = current->getLink();
-		}
-
-		if (found)
-		{
-			cout << "Division " << divisionNumber << ": "
-				 << current->getCandidate().getVotesByDivision(divisionNumber) << endl;
-		}
-
-		current = NULL;
-	}
+	if (searchCandidateList(ssn, vecIter))
+		cout << "Division " << divisionNumber
+			 << ": " << vecIter->getVotesByDivision(divisionNumber)
+			 << endl;
 }
 
 void CandidateList::printCandidateTotalVotes(int ssn) const
 {
-	if (first == NULL)
-		cerr << "List is empty." << endl;
-	else
-	{
-		Node *current = first;
-		bool found = false;
+	vector<CandidateType>::const_iterator vecIter;
 
-		while (current != NULL && !found)
-		{
-			if (current->getCandidate().getSSN() == ssn)
-				found = true;
-			else
-				current = current->getLink();
-		}
-
-		if (found)
-			cout << "Total Votes: " << current->getCandidate().getTotalVotes() << endl;
-
-		current = NULL;
-	}
+	if (searchCandidateList(ssn, vecIter))
+		cout << "Total Votes: " << vecIter->getTotalVotes() << endl;
 }
 
 void CandidateList::printFinalResults() const
 {
-	Node *current = first;
-	Node *currentMax = first; // the current max within a single while loop iteration
-	Node *previousMax = first; // used to make us ignore nodes that we already printed out (all numbers must be below the previousMax)
-	
-	int max = 0;
+	// vecIter can start at candidates.begin() + 1
+	// assuming list is greater than 1
+	// this will be used to iterate through the loop
+	vector<CandidateType>::const_iterator vecIter = candidates.begin() + 1;
+
+	// previousIterWithHighestNumOfVotes will be used to
+	// act as the upper bound for the next iteration of the for loop
+	// it will help us print in descending order properly
+	vector<CandidateType>::const_iterator previousIterWithHighestNumOfVotes = candidates.begin();
+
+	// this will be used to save the location of the
+	// candidate with the highest number of votes
+	vector<CandidateType>::const_iterator currentIterWithHighestNumOfVotes = candidates.begin();
+
+	int max = currentIterWithHighestNumOfVotes->getTotalVotes();
+	int size = static_cast<int>(candidates.size());
 
 	cout << "\nFINAL RESULTS" << "\n-------------" << endl;
-		
-	for (int i = 0; i < count; i++)
+
+	for (int i = 0; i < size; i++)
 	{
-		if (i == 0) // Find the absolute maximum of the list. Prints 278.
+		if (i == 0) // find the abs max
 		{
-			while (current != NULL)
+			while (vecIter != candidates.end())
 			{
-				if (current->getCandidate().getTotalVotes() > max)
+				if (vecIter->getTotalVotes() > max)
 				{
-					previousMax = current;
-					max = previousMax->getCandidate().getTotalVotes();
+					currentIterWithHighestNumOfVotes = vecIter;
+					max = currentIterWithHighestNumOfVotes->getTotalVotes();
 				}
-				current = current->getLink();
+
+				vecIter++;
 			}
 		}
-		else // Find the relative maximums, crossing out the ones we already used. 233 -> 221 -> 173 -> and so on...
-		{
-			while (current != NULL)
+		else // loop through and find the next maxes
+		{	// each max must be below the previous max
+			while (vecIter != candidates.end())
 			{
-				if (current->getCandidate().getTotalVotes() < previousMax->getCandidate().getTotalVotes()
-					&& current->getCandidate().getTotalVotes() > max)
+				if (vecIter->getTotalVotes() < previousIterWithHighestNumOfVotes->getTotalVotes()
+					&& vecIter->getTotalVotes() > max)
 				{
-					currentMax = current;
-					max = current->getCandidate().getTotalVotes();
+					currentIterWithHighestNumOfVotes = vecIter;
+					max = currentIterWithHighestNumOfVotes->getTotalVotes();
 				}
-				current = current->getLink();
+
+				vecIter++;
 			}
-			previousMax = currentMax; // save the value for the next iteration
 		}
 		
-		// Format and prints the current max.
-		if (count - i < 10)
-			cout << ' ' << (count - i) << "  ";
+		// formatting
+		if (size - i < 10)
+			cout << " " << size - i << "  ";
 		else
-			cout << count - i << "  ";
+			cout << size - i << "  ";
+
 		if (max < 100)
 			cout << max << " ";
 		else
 			cout << max;
+
 		cout << " ";
-		previousMax->getCandidate().printName();
+		currentIterWithHighestNumOfVotes->printName();
 		cout << endl;
+		// end formatting
 
-		// Reset the variables. Do not reset previousMax, we use that to ignore the nodes that were already printed.
-		current = first;
-		currentMax = first;
-		max = 0;
-	}
-	
-	current = currentMax = previousMax = NULL;
-}
+		// save the iterator with the highest num of votes
+		// it'll become the upper bound for the next loop
+		previousIterWithHighestNumOfVotes = currentIterWithHighestNumOfVotes;
 
-void CandidateList::destroyList()
-{
-	if (first == NULL)
-		cerr << "List is empty." << endl;
-	else
-	{
-		Node *temp;
-		
-		while (first != NULL)
-		{
-			temp = first;
-			first = first->getLink();
-			delete temp;
-			temp = NULL;
-		}
-		// first is already NULL from the loop
-		last = NULL;
-		count = 0;
+		// do not reset previousIterWithhighestNumOfVotes
+		vecIter = candidates.begin();
+		currentIterWithHighestNumOfVotes = candidates.begin();
+		max = 0; // max must be reset to 0 so that we have the votes in descending order
 	}
 }
 
 CandidateList::~CandidateList()
 {
-	destroyList();
+
 }

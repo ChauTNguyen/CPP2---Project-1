@@ -59,7 +59,12 @@ void processChoice(CandidateList &candidateList) {
             // Print all candidates
             case 1:
                 cout << endl;
-                candidateList.printAllCandidates();
+
+				if (candidateList.isEmpty())
+					cerr << "List is empty." << endl;
+				else
+					candidateList.printAllCandidates();
+
 				cout << endl;
 				system("Pause");
                 break;
@@ -69,10 +74,22 @@ void processChoice(CandidateList &candidateList) {
                 cout << "\nEnter candidate's social security number (no dashes): ";
                 cin >> ssn;
                 cout << endl;
-                candidateList.printCandidateName(ssn);
-                cout << endl;
-                for (int i = 0; i < NUM_OF_DIVISIONS; ++i)
-                    candidateList.printCandidateDivisionVotes(ssn, i);
+
+				if (candidateList.isEmpty())
+					cerr << "List is empty." << endl;
+				else
+				{
+					if (candidateList.searchCandidate(ssn))
+					{
+						candidateList.printCandidateName(ssn);
+						cout << endl;
+						for (int i = 0; i < NUM_OF_DIVISIONS; ++i)
+							candidateList.printCandidateDivisionVotes(ssn, i);
+					}
+					else
+						cout << "SSN not found." << endl;
+				}
+
 				cout << endl;
 				system("Pause");
                 break;
@@ -82,32 +99,62 @@ void processChoice(CandidateList &candidateList) {
                 cout << "\nEnter candidate's social security number (no dashes): ";
                 cin >> ssn;
                 cout << endl;
-                candidateList.printCandidateName(ssn);
-                cout << endl;
-                candidateList.printCandidateTotalVotes(ssn);
+
+				if (candidateList.isEmpty())
+					cerr << "List is empty." << endl;
+				else
+				{
+					if (candidateList.searchCandidate(ssn))
+					{
+						candidateList.printCandidateName(ssn);
+						cout << endl;
+						candidateList.printCandidateTotalVotes(ssn);
+					}
+					else
+						cout << "SSN not found." << endl;
+				}
+                
 				cout << endl;
 				system("Pause");
                 break;
 
                 // Print winner
             case 4:
-                ssn = candidateList.getWinner();
-                if (ssn != 0) {
+				if (candidateList.isEmpty())
+					cerr << "\nList is empty." << endl;
+				else
+				{
+					ssn = candidateList.getWinner();
+
+					// I don't think we need this conditional chunk..
+					/*
+					if (ssn != 0)
+					{
+						cout << "\nElection winner: ";
+						candidateList.printCandidateName(ssn);
+						cout << endl;
+						candidateList.printCandidateTotalVotes(ssn);
+					}
+					else
+						cout << "\nThere are no candidates." << endl;
+						*/
 					cout << "\nElection winner: ";
-                    candidateList.printCandidateName(ssn);
-                    cout << endl;
-                    candidateList.printCandidateTotalVotes(ssn);
-                    cout << endl;
-                }
-                else {
-                    cout << "\nThere are no candidates." << endl;
-                }
+					candidateList.printCandidateName(ssn);
+					cout << endl;
+					candidateList.printCandidateTotalVotes(ssn);
+				}
+                
+				cout << endl;
 				system("Pause");
                 break;
 
 				// Print final results in descending order
 			case 5:
-				candidateList.printFinalResults();
+				if (candidateList.isEmpty())
+					cerr << "\nList is empty." << endl;
+				else
+					candidateList.printFinalResults();
+
 				cout << endl;
 				system("Pause");
 				break;
