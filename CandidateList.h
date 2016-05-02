@@ -15,7 +15,7 @@ public:
 	bool isEmpty() const;
 	bool searchCandidate(int ssn) const;
 
-	void addCandidate(const CandidateType &c);
+	void addCandidate(const CandidateType &c) const;
 
 	int getWinner() const;
 
@@ -28,7 +28,7 @@ public:
 	~CandidateList();
 	
 private:
-	vector<CandidateType> candidates;
+	vector<CandidateType> *candidates;
 
 	bool searchCandidateList(int ssn, vector<CandidateType>::const_iterator& vecIter) const;
 };

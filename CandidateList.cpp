@@ -2,12 +2,12 @@
 
 CandidateList::CandidateList()
 {
-
+	candidates = new vector<CandidateType>;
 }
 
 bool CandidateList::isEmpty() const
 {
-	return candidates.empty();
+	return candidates->empty();
 }
 
 bool CandidateList::searchCandidate(int ssn) const
@@ -19,10 +19,10 @@ bool CandidateList::searchCandidate(int ssn) const
 bool CandidateList::searchCandidateList
 	(int ssn, vector<CandidateType>::const_iterator& vecIter) const
 {
-	vecIter = candidates.begin();
+	vecIter = candidates->begin();
 	bool found = false;
 
-	while (!found && vecIter != candidates.end())
+	while (!found && vecIter != candidates->end())
 	{
 		if (vecIter->getSSN() == ssn)
 			found = true;
@@ -36,9 +36,9 @@ bool CandidateList::searchCandidateList
 		return false;
 }
 
-void CandidateList::addCandidate(const CandidateType &c)
+void CandidateList::addCandidate(const CandidateType &c) const
 {
-	candidates.push_back(c);
+	candidates->push_back(c);
 }
 
 int CandidateList::getWinner() const
@@ -46,11 +46,11 @@ int CandidateList::getWinner() const
 	vector<CandidateType>::const_iterator vecIter;
 
 	// max <= first element to save a bit of time
-	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates.begin();
+	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates->begin();
 	int max = iterWithHighestNumOfVotes->getTotalVotes();
 
 	// vecIter can then start on the element after
-	for (vecIter = candidates.begin() + 1; vecIter != candidates.end(); vecIter++)
+	for (vecIter = candidates->begin() + 1; vecIter != candidates->end(); vecIter++)
 	{
 		if (vecIter->getTotalVotes() > max)
 			iterWithHighestNumOfVotes = vecIter;
@@ -71,7 +71,7 @@ void CandidateList::printAllCandidates() const
 {
 	vector<CandidateType>::const_iterator vecIter;
 
-	for (vecIter = candidates.begin(); vecIter != candidates.end(); vecIter++)
+	for (vecIter = candidates->begin(); vecIter != candidates->end(); vecIter++)
 		vecIter->printCandidateInfo();
 }
 
@@ -102,15 +102,15 @@ void CandidateList::printFinalResults() const
 	// prevIterWithHighestNumOfVotes will be used to
 	// act as the upper bound for the next iteration of the for loop
 	// it will help us print in descending order properly
-	vector<CandidateType>::const_iterator prevIterWithHighestNumOfVotes = candidates.begin();
+	vector<CandidateType>::const_iterator prevIterWithHighestNumOfVotes = candidates->begin();
 
 	// this will be used to save the location of the
 	// candidate with the highest number of votes
 	// in the current loop iteration
-	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates.begin();
+	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates->begin();
 
 	int max = iterWithHighestNumOfVotes->getTotalVotes();
-	int size = static_cast<int>(candidates.size());
+	int size = static_cast<int>(candidates->size());
 
 	cout << "\nFINAL RESULTS" << "\n-------------" << endl;
 
@@ -118,7 +118,7 @@ void CandidateList::printFinalResults() const
 	{
 		if (i == 0) // find the abs max
 		{	// can do candidates.begin() + 1 only for this loop
-			for (vecIter = candidates.begin() + 1; vecIter != candidates.end(); vecIter++)
+			for (vecIter = candidates->begin() + 1; vecIter != candidates->end(); vecIter++)
 			{
 				if (vecIter->getTotalVotes() > max)
 				{
@@ -131,7 +131,7 @@ void CandidateList::printFinalResults() const
 		{	// each max must be below the previous max
 			// vecIter MUST be set to candidates.begin(), not candidates.begin() + 1
 			// or you will skip Donald Duck's votes
-			for (vecIter = candidates.begin(); vecIter != candidates.end(); vecIter++)
+			for (vecIter = candidates->begin(); vecIter != candidates->end(); vecIter++)
 			{
 				if (vecIter->getTotalVotes() < prevIterWithHighestNumOfVotes->getTotalVotes()
 					&& vecIter->getTotalVotes() > max)
@@ -164,12 +164,13 @@ void CandidateList::printFinalResults() const
 
 		// do not reset previousIterWithhighestNumOfVotes
 		// vecIter is automatically resetted through the loops
-		iterWithHighestNumOfVotes = candidates.begin();
+		iterWithHighestNumOfVotes = candidates->begin();
 		max = 0; // max MUST be set to 0 here so that we have the votes in descending order
 	}
 }
 
 CandidateList::~CandidateList()
 {
-
+	delete candidates;
+	candidates = NULL;
 }
