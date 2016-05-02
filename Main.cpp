@@ -125,19 +125,6 @@ void processChoice(CandidateList &candidateList) {
 				else
 				{
 					ssn = candidateList.getWinner();
-
-					// I don't think we need this conditional chunk..
-					/*
-					if (ssn != 0)
-					{
-						cout << "\nElection winner: ";
-						candidateList.printCandidateName(ssn);
-						cout << endl;
-						candidateList.printCandidateTotalVotes(ssn);
-					}
-					else
-						cout << "\nThere are no candidates." << endl;
-						*/
 					cout << "\nElection winner: ";
 					candidateList.printCandidateName(ssn);
 					cout << endl;

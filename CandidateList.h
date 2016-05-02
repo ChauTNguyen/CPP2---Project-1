@@ -6,11 +6,14 @@
 #include "CandidateType.h"
 
 #include <vector>
+#include <map>
 
 class CandidateList
 {
 public:
 	CandidateList();
+	CandidateList(const CandidateList& otherList);
+	CandidateList& operator=(const CandidateList& otherList);
 
 	bool isEmpty() const;
 	bool searchCandidate(int ssn) const;

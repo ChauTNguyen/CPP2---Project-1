@@ -5,6 +5,41 @@ CandidateList::CandidateList()
 	candidates = new vector<CandidateType>;
 }
 
+CandidateList::CandidateList(const CandidateList& otherList)
+{
+	candidates = new vector<CandidateType>;
+
+	// vecIter will traverse otherList.candidates
+	vector<CandidateType>::const_iterator vecIter;
+
+	for (vecIter = otherList.candidates->begin(); vecIter != otherList.candidates->end(); ++vecIter)
+		candidates->push_back(*vecIter);
+}
+
+CandidateList& CandidateList::operator=(const CandidateList& otherList)
+{
+	if (this != &otherList) // avoid self-assignment
+	{ // this is a pointer so it must use ->
+		// I think this->candidates->size() makes more sense.. or should we do capacity?
+		if (this->candidates->size() != otherList.candidates->size())
+		{
+			delete candidates;
+			candidates = new vector<CandidateType>;
+		}
+
+		vector<CandidateType>::const_iterator vecIter;
+
+		for (vecIter = otherList.candidates->begin(); vecIter != otherList.candidates->end(); ++vecIter)
+			candidates->push_back(*vecIter);
+	}
+	else
+	{
+		cerr << "Attempted self assignment." << endl;
+	}
+
+	return *this;
+}
+
 bool CandidateList::isEmpty() const
 {
 	return candidates->empty();
@@ -95,78 +130,23 @@ void CandidateList::printCandidateTotalVotes(int ssn) const
 
 void CandidateList::printFinalResults() const
 {
-	// vecIter can start at candidates.begin() + 1
-	// assuming list is greater than 1
-	vector<CandidateType>::const_iterator vecIter;
+	map<int, string> map1;
+	vector<CandidateType>::const_iterator vecCopyIter;
 
-	// prevIterWithHighestNumOfVotes will be used to
-	// act as the upper bound for the next iteration of the for loop
-	// it will help us print in descending order properly
-	vector<CandidateType>::const_iterator prevIterWithHighestNumOfVotes = candidates->begin();
-
-	// this will be used to save the location of the
-	// candidate with the highest number of votes
-	// in the current loop iteration
-	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates->begin();
-
-	int max = iterWithHighestNumOfVotes->getTotalVotes();
-	int size = static_cast<int>(candidates->size());
-
-	cout << "\nFINAL RESULTS" << "\n-------------" << endl;
-
-	for (int i = 0; i < size; i++)
+	for (vecCopyIter = candidates->begin(); vecCopyIter != candidates->end(); vecCopyIter++)
 	{
-		if (i == 0) // find the abs max
-		{	// can do candidates.begin() + 1 only for this loop
-			for (vecIter = candidates->begin() + 1; vecIter != candidates->end(); vecIter++)
-			{
-				if (vecIter->getTotalVotes() > max)
-				{
-					iterWithHighestNumOfVotes = vecIter;
-					max = iterWithHighestNumOfVotes->getTotalVotes();
-				}
-			}
-		}
-		else // loop through and find the next maxes
-		{	// each max must be below the previous max
-			// vecIter MUST be set to candidates.begin(), not candidates.begin() + 1
-			// or you will skip Donald Duck's votes
-			for (vecIter = candidates->begin(); vecIter != candidates->end(); vecIter++)
-			{
-				if (vecIter->getTotalVotes() < prevIterWithHighestNumOfVotes->getTotalVotes()
-					&& vecIter->getTotalVotes() > max)
-				{
-					iterWithHighestNumOfVotes = vecIter;
-					max = iterWithHighestNumOfVotes->getTotalVotes();
-				}
-			}
-		}
-		
-		// formatting
-		if (size - i < 10)
-			cout << " " << size - i << "  ";
-		else
-			cout << size - i << "  ";
-
-		if (max < 100)
-			cout << max << " ";
-		else
-			cout << max;
-
-		cout << " ";
-		iterWithHighestNumOfVotes->printName();
-		cout << endl;
-		// end formatting
-
-		// save the iterator with the highest num of votes
-		// it'll become the upper bound for the next loop
-		prevIterWithHighestNumOfVotes = iterWithHighestNumOfVotes;
-
-		// do not reset previousIterWithhighestNumOfVotes
-		// vecIter is automatically resetted through the loops
-		iterWithHighestNumOfVotes = candidates->begin();
-		max = 0; // max MUST be set to 0 here so that we have the votes in descending order
+		map1.insert(pair<int, string>(vecCopyIter->getTotalVotes(), vecCopyIter->getFirstName() + " " + vecCopyIter->getLastName()));
 	}
+	
+	map<int, string>::const_reverse_iterator mapIter1;
+	int count = 1;
+	for (mapIter1 = map1.rbegin(); mapIter1 != map1.rend(); ++mapIter1)
+	{
+		cout.width(5); cout << count << " | ";
+		cout.width(3); cout << right << mapIter1->first << " | " << mapIter1->second << endl;
+		++count;
+	}
+
 }
 
 CandidateList::~CandidateList()
