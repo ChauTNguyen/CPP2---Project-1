@@ -45,12 +45,11 @@ int CandidateList::getWinner() const
 {
 	vector<CandidateType>::const_iterator vecIter;
 
-	// make the max the first element of the vector
-	// to save a wee bit of time
+	// max <= first element to save a bit of time
 	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates.begin();
 	int max = iterWithHighestNumOfVotes->getTotalVotes();
 
-	// make sure to start at the second element
+	// vecIter can then start on the element after
 	for (vecIter = candidates.begin() + 1; vecIter != candidates.end(); vecIter++)
 	{
 		if (vecIter->getTotalVotes() > max)
@@ -98,7 +97,7 @@ void CandidateList::printFinalResults() const
 {
 	// vecIter can start at candidates.begin() + 1
 	// assuming list is greater than 1
-	vector<CandidateType>::const_iterator vecIter = candidates.begin() + 1;
+	vector<CandidateType>::const_iterator vecIter;
 
 	// prevIterWithHighestNumOfVotes will be used to
 	// act as the upper bound for the next iteration of the for loop
@@ -118,21 +117,21 @@ void CandidateList::printFinalResults() const
 	for (int i = 0; i < size; i++)
 	{
 		if (i == 0) // find the abs max
-		{
-			while (vecIter != candidates.end())
+		{	// can do candidates.begin() + 1 only for this loop
+			for (vecIter = candidates.begin() + 1; vecIter != candidates.end(); vecIter++)
 			{
 				if (vecIter->getTotalVotes() > max)
 				{
 					iterWithHighestNumOfVotes = vecIter;
 					max = iterWithHighestNumOfVotes->getTotalVotes();
 				}
-
-				vecIter++;
 			}
 		}
 		else // loop through and find the next maxes
 		{	// each max must be below the previous max
-			while (vecIter != candidates.end())
+			// vecIter MUST be set to candidates.begin(), not candidates.begin() + 1
+			// or you will skip Donald Duck's votes
+			for (vecIter = candidates.begin(); vecIter != candidates.end(); vecIter++)
 			{
 				if (vecIter->getTotalVotes() < prevIterWithHighestNumOfVotes->getTotalVotes()
 					&& vecIter->getTotalVotes() > max)
@@ -140,8 +139,6 @@ void CandidateList::printFinalResults() const
 					iterWithHighestNumOfVotes = vecIter;
 					max = iterWithHighestNumOfVotes->getTotalVotes();
 				}
-
-				vecIter++;
 			}
 		}
 		
@@ -166,9 +163,9 @@ void CandidateList::printFinalResults() const
 		prevIterWithHighestNumOfVotes = iterWithHighestNumOfVotes;
 
 		// do not reset previousIterWithhighestNumOfVotes
-		vecIter = candidates.begin();
+		// vecIter is automatically resetted through the loops
 		iterWithHighestNumOfVotes = candidates.begin();
-		max = 0; // max must be reset to 0 so that we have the votes in descending order
+		max = 0; // max MUST be set to 0 here so that we have the votes in descending order
 	}
 }
 
