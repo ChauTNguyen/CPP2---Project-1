@@ -62,7 +62,7 @@ void CandidateType::printCandidateInfo() const
 void CandidateType::printCandidateTotalVotes() const
 {
     printName();
-    cout << "\n\tTotal Votes (all divisions): " << getTotalVotes() << endl;  // check if tab is right later
+    cout << "\n\tTotal Votes (all divisions): " << getTotalVotes() << endl;
 }
 
 /*
@@ -73,7 +73,8 @@ void CandidateType::printCandidateTotalVotes() const
 void CandidateType::printCandidateDivisionVotes(int divisionNumber) const
 {
     printName();
-    cout << "\n\tDivision " << divisionNumber << " total votes: " << getVotesByDivision(divisionNumber) << endl;
+    cout << "\n\tDivision " << divisionNumber
+		 << " total votes: " << getVotesByDivision(divisionNumber) << endl;
 }
 
 /*

@@ -47,17 +47,17 @@ int CandidateList::getWinner() const
 
 	// make the max the first element of the vector
 	// to save a wee bit of time
-	vector<CandidateType>::const_iterator iteratorWithHighestNumOfVotes = candidates.begin();
-	int max = iteratorWithHighestNumOfVotes->getTotalVotes();
+	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates.begin();
+	int max = iterWithHighestNumOfVotes->getTotalVotes();
 
 	// make sure to start at the second element
 	for (vecIter = candidates.begin() + 1; vecIter != candidates.end(); vecIter++)
 	{
 		if (vecIter->getTotalVotes() > max)
-			iteratorWithHighestNumOfVotes = vecIter;
+			iterWithHighestNumOfVotes = vecIter;
 	}
 
-	return iteratorWithHighestNumOfVotes->getSSN();
+	return iterWithHighestNumOfVotes->getSSN();
 }
 
 void CandidateList::printCandidateName(int ssn) const
@@ -98,19 +98,19 @@ void CandidateList::printFinalResults() const
 {
 	// vecIter can start at candidates.begin() + 1
 	// assuming list is greater than 1
-	// this will be used to iterate through the loop
 	vector<CandidateType>::const_iterator vecIter = candidates.begin() + 1;
 
-	// previousIterWithHighestNumOfVotes will be used to
+	// prevIterWithHighestNumOfVotes will be used to
 	// act as the upper bound for the next iteration of the for loop
 	// it will help us print in descending order properly
-	vector<CandidateType>::const_iterator previousIterWithHighestNumOfVotes = candidates.begin();
+	vector<CandidateType>::const_iterator prevIterWithHighestNumOfVotes = candidates.begin();
 
 	// this will be used to save the location of the
 	// candidate with the highest number of votes
-	vector<CandidateType>::const_iterator currentIterWithHighestNumOfVotes = candidates.begin();
+	// in the current loop iteration
+	vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates.begin();
 
-	int max = currentIterWithHighestNumOfVotes->getTotalVotes();
+	int max = iterWithHighestNumOfVotes->getTotalVotes();
 	int size = static_cast<int>(candidates.size());
 
 	cout << "\nFINAL RESULTS" << "\n-------------" << endl;
@@ -123,8 +123,8 @@ void CandidateList::printFinalResults() const
 			{
 				if (vecIter->getTotalVotes() > max)
 				{
-					currentIterWithHighestNumOfVotes = vecIter;
-					max = currentIterWithHighestNumOfVotes->getTotalVotes();
+					iterWithHighestNumOfVotes = vecIter;
+					max = iterWithHighestNumOfVotes->getTotalVotes();
 				}
 
 				vecIter++;
@@ -134,11 +134,11 @@ void CandidateList::printFinalResults() const
 		{	// each max must be below the previous max
 			while (vecIter != candidates.end())
 			{
-				if (vecIter->getTotalVotes() < previousIterWithHighestNumOfVotes->getTotalVotes()
+				if (vecIter->getTotalVotes() < prevIterWithHighestNumOfVotes->getTotalVotes()
 					&& vecIter->getTotalVotes() > max)
 				{
-					currentIterWithHighestNumOfVotes = vecIter;
-					max = currentIterWithHighestNumOfVotes->getTotalVotes();
+					iterWithHighestNumOfVotes = vecIter;
+					max = iterWithHighestNumOfVotes->getTotalVotes();
 				}
 
 				vecIter++;
@@ -157,17 +157,17 @@ void CandidateList::printFinalResults() const
 			cout << max;
 
 		cout << " ";
-		currentIterWithHighestNumOfVotes->printName();
+		iterWithHighestNumOfVotes->printName();
 		cout << endl;
 		// end formatting
 
 		// save the iterator with the highest num of votes
 		// it'll become the upper bound for the next loop
-		previousIterWithHighestNumOfVotes = currentIterWithHighestNumOfVotes;
+		prevIterWithHighestNumOfVotes = iterWithHighestNumOfVotes;
 
 		// do not reset previousIterWithhighestNumOfVotes
 		vecIter = candidates.begin();
-		currentIterWithHighestNumOfVotes = candidates.begin();
+		iterWithHighestNumOfVotes = candidates.begin();
 		max = 0; // max must be reset to 0 so that we have the votes in descending order
 	}
 }
