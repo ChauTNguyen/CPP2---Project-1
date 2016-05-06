@@ -74,7 +74,8 @@ void CandidateType::printCandidateDivisionVotes(int divisionNumber) const
 {
     printName();
     cout << "\n\tDivision " << divisionNumber
-        << " total votes: " << getVotesByDivision(divisionNumber) << endl;
+         << " total votes: " << getVotesByDivision(divisionNumber)
+         << endl;
 }
 
 /*
