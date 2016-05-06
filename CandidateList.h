@@ -11,29 +11,29 @@
 class CandidateList
 {
 public:
-	CandidateList();
-	CandidateList(const CandidateList& otherList);
-	CandidateList& operator=(const CandidateList& otherList);
+    CandidateList();
+    CandidateList(const CandidateList& otherList);
+    CandidateList& operator=(const CandidateList& otherList);
 
-	bool isEmpty() const;
-	bool searchCandidate(int ssn) const;
+    bool isEmpty() const;
+    bool searchCandidate(int ssn) const;
 
-	void addCandidate(const CandidateType &c) const;
+    void addCandidate(const CandidateType &c) const;
 
-	int getWinner() const;
+    int getWinner() const;
 
-	void printCandidateName(int ssn) const;
-	void printAllCandidates() const;
-	void printCandidateDivisionVotes(int ssn, int divisionNumber) const;
-	void printCandidateTotalVotes(int ssn) const;
-	void printFinalResults() const;
+    void printCandidateName(int ssn) const;
+    void printAllCandidates() const;
+    void printCandidateDivisionVotes(int ssn, int divisionNumber) const;
+    void printCandidateTotalVotes(int ssn) const;
+    void printFinalResults() const;
 
-	~CandidateList();
-	
+    ~CandidateList();
+
 private:
-	vector<CandidateType> *candidates;
+    vector<CandidateType> *candidates;
 
-	bool searchCandidateList(int ssn, vector<CandidateType>::const_iterator& vecIter) const;
+    bool searchCandidateList(int ssn, vector<CandidateType>::const_iterator& vecIter) const;
 };
 
 #endif

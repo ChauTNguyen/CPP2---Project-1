@@ -11,47 +11,47 @@ using namespace std;
 
 void createCandidateList(ifstream& infile, CandidateList& candidateList)
 {
-	int ssn;
-	int allVotes[NUM_OF_DIVISIONS];
-	string  fName, lName;
+    int ssn;
+    int allVotes[NUM_OF_DIVISIONS];
+    string  fName, lName;
 
-	infile >> ssn;
+    infile >> ssn;
 
-	while (ssn != -999)
-	{
-		CandidateType newCandidate;
+    while (ssn != -999)
+    {
+        CandidateType newCandidate;
 
-		infile >> fName;
-		infile >> lName;
-		newCandidate.setPersonInfo(fName, lName, ssn);
+        infile >> fName;
+        infile >> lName;
+        newCandidate.setPersonInfo(fName, lName, ssn);
 
-		//for (int i = 0; i < NUM_OF_DIV; ++i)
-		for (int i = 0; i < NUM_OF_DIVISIONS; ++i)
-		{
-			infile >> allVotes[i];
-			newCandidate.updateVotesByDivision(i, allVotes[i]);
-		}
+        //for (int i = 0; i < NUM_OF_DIV; ++i)
+        for (int i = 0; i < NUM_OF_DIVISIONS; ++i)
+        {
+            infile >> allVotes[i];
+            newCandidate.updateVotesByDivision(i, allVotes[i]);
+        }
 
-		candidateList.addCandidate(newCandidate);
+        candidateList.addCandidate(newCandidate);
 
 
-		infile >> ssn;
-	}
+        infile >> ssn;
+    }
 }
 
 void readCandidateData(CandidateList& candidateList)
 {
-	ifstream infile;
+    ifstream infile;
 
-	infile.open("candidates_data.txt");
+    infile.open("candidates_data.txt");
 
-	if (!infile)
-	{
-		cerr << "Input file does not exist." << endl;
-		exit(1);
-	}
+    if (!infile)
+    {
+        cerr << "Input file does not exist." << endl;
+        exit(1);
+    }
 
-	createCandidateList(infile, candidateList);
+    createCandidateList(infile, candidateList);
 
-	infile.close();
+    infile.close();
 }

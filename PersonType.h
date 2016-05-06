@@ -11,30 +11,30 @@ using namespace std;
 class PersonType
 {
 public:
-	PersonType(); // default constructor
-	PersonType(const string& newFirst, const string& newLast,
-			   int newSSN);
+    PersonType(); // default constructor
+    PersonType(const string& newFirst, const string& newLast,
+        int newSSN);
 
-	// setter functions
-	void setPersonInfo(const string& newFirst, const string& newLast,
-					   int newSSN);
+    // setter functions
+    void setPersonInfo(const string& newFirst, const string& newLast,
+        int newSSN);
 
-	// getter functions
-	string getFirstName() const;
-	string getLastName() const;
-	int getSSN() const;
+    // getter functions
+    string getFirstName() const;
+    string getLastName() const;
+    int getSSN() const;
 
-	// print functions
-	void printName() const;
-	void printPersonInfo() const;
-	void printSSN() const;
+    // print functions
+    void printName() const;
+    void printPersonInfo() const;
+    void printSSN() const;
 
-	~PersonType(); // deconstructor
+    ~PersonType(); // deconstructor
 
 private:
-	string firstName;
-	string lastName;
-	int ssn;
+    string firstName;
+    string lastName;
+    int ssn;
 };
 
 #endif
