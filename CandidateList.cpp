@@ -21,8 +21,7 @@ CandidateList& CandidateList::operator=(const CandidateList& otherList) {
         for (const auto &otherCandidate : *otherList.candidates) {
             candidates->push_back(otherCandidate);
         }
-    }
-    else {
+    } else {
         cerr << "Attempted self assignment." << endl;
     }
 
@@ -99,8 +98,8 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 
     if (searchCandidateList(ssn, vecIter)) {
         cout << "Division " << divisionNumber
-            << ": " << vecIter->getVotesByDivision(divisionNumber)
-            << endl;
+             << ": " << vecIter->getVotesByDivision(divisionNumber)
+             << endl;
     }
 }
 
@@ -127,7 +126,6 @@ void CandidateList::printFinalResults() const {
         cout.width(3); cout << right << mapIter->first << " | " << mapIter->second << endl;
         ++count;
     }
-
 }
 
 CandidateList::~CandidateList() {
