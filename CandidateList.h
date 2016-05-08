@@ -8,8 +8,7 @@
 #include <vector>
 #include <map>
 
-class CandidateList
-{
+class CandidateList {
 public:
     CandidateList();
     CandidateList(const CandidateList& otherList);

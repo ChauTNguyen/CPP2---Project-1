@@ -8,8 +8,7 @@
 
 using namespace std;
 
-class PersonType
-{
+class PersonType {
 public:
     PersonType(); // default constructor
     PersonType(const string& newFirst, const string& newLast,
