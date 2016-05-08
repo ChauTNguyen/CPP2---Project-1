@@ -19,7 +19,6 @@
 using namespace std;
 
 void displayMenu();
-
 void processChoice(CandidateList &candidateList);
 
 int main() {
@@ -53,17 +52,18 @@ void processChoice(CandidateList &candidateList) {
     while (choice > 0 && choice < 6) {
         string fName, lName;
         int division = 0,
-            ssn = 0;
+                 ssn = 0;
 
         switch (choice) {
             // Print all candidates
         case 1:
             cout << endl;
 
-            if (candidateList.isEmpty())
+            if (candidateList.isEmpty()) {
                 cerr << "List is empty." << endl;
-            else
+            } else {
                 candidateList.printAllCandidates();
+            }
 
             cout << endl;
             system("Pause");
@@ -75,19 +75,17 @@ void processChoice(CandidateList &candidateList) {
             cin >> ssn;
             cout << endl;
 
-            if (candidateList.isEmpty())
+            if (candidateList.isEmpty()) {
                 cerr << "List is empty." << endl;
-            else
-            {
-                if (candidateList.searchCandidate(ssn))
-                {
+            } else {
+                if (candidateList.searchCandidate(ssn)) {
                     candidateList.printCandidateName(ssn);
                     cout << endl;
                     for (int i = 0; i < NUM_OF_DIVISIONS; ++i)
                         candidateList.printCandidateDivisionVotes(ssn, i);
-                }
-                else
+                } else {
                     cout << "SSN not found." << endl;
+                }
             }
 
             cout << endl;
@@ -100,18 +98,16 @@ void processChoice(CandidateList &candidateList) {
             cin >> ssn;
             cout << endl;
 
-            if (candidateList.isEmpty())
+            if (candidateList.isEmpty()) {
                 cerr << "List is empty." << endl;
-            else
-            {
-                if (candidateList.searchCandidate(ssn))
-                {
+            }  else {
+                if (candidateList.searchCandidate(ssn)) {
                     candidateList.printCandidateName(ssn);
                     cout << endl;
                     candidateList.printCandidateTotalVotes(ssn);
-                }
-                else
+                } else {
                     cout << "SSN not found." << endl;
+                }
             }
 
             cout << endl;
@@ -120,10 +116,9 @@ void processChoice(CandidateList &candidateList) {
 
             // Print winner
         case 4:
-            if (candidateList.isEmpty())
+            if (candidateList.isEmpty()) {
                 cerr << "\nList is empty." << endl;
-            else
-            {
+            } else {
                 ssn = candidateList.getWinner();
                 cout << "\nElection winner: ";
                 candidateList.printCandidateName(ssn);
@@ -137,10 +132,11 @@ void processChoice(CandidateList &candidateList) {
 
             // Print final results in descending order
         case 5:
-            if (candidateList.isEmpty())
+            if (candidateList.isEmpty()) {
                 cerr << "\nList is empty." << endl;
-            else
+            } else {
                 candidateList.printFinalResults();
+            }
 
             cout << endl;
             system("Pause");

@@ -8,8 +8,7 @@
 
 using namespace std;
 
-class PersonType
-{
+class PersonType {
 public:
     PersonType();
     PersonType(const string& newFirst,
