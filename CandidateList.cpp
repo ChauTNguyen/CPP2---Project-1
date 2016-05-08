@@ -42,13 +42,11 @@ bool CandidateList::searchCandidateList(int ssn,
     const {
     vecIter = candidates->begin();
     bool found = false;
-
     while (!found && vecIter != candidates->end())
     {
         if (vecIter->getSSN() == ssn) {
             found = true;
-        }
-        else {
+        } else {
             vecIter++;
         }
     }
@@ -89,13 +87,11 @@ void CandidateList::printCandidateName(int ssn) const {
 void CandidateList::printAllCandidates() const {
     for (const auto &candidate : *candidates) {
         candidate.printCandidateInfo();
-
     }
 }
 
 void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) const {
     vector<CandidateType>::const_iterator vecIter;
-
     if (searchCandidateList(ssn, vecIter)) {
         cout << "Division " << divisionNumber
              << ": " << vecIter->getVotesByDivision(divisionNumber)
