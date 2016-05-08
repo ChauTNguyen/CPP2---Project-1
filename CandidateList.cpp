@@ -7,16 +7,14 @@ CandidateList::CandidateList() {
 }
 
 CandidateList::CandidateList(const CandidateList& otherList) {
-    candidates = new vector<CandidateType>(otherList.candidates->begin(),
-                                           otherList.candidates->end());
+    candidates = new vector<CandidateType>(*otherList.candidates);
 }
 
 CandidateList& CandidateList::operator=(const CandidateList& otherList) {
     if (this != &otherList) {
         if (this->candidates != otherList.candidates) {
             delete candidates;
-            candidates = new vector<CandidateType>(otherList.candidates->begin(),
-                                                   otherList.candidates->end());
+            candidates = new vector<CandidateType>(*otherList.candidates);
         }
     } else {
         cerr << "Attempted self assignment." << endl;
