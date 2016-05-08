@@ -1,12 +1,14 @@
 #include "CandidateList.h"
 
+using vecConstIter = vector<CandidateType>::const_iterator;
+
 CandidateList::CandidateList() {
     candidates = new vector<CandidateType>;
 }
 
 CandidateList::CandidateList(const CandidateList& otherList) {
     candidates = new vector<CandidateType>;
-    for (const auto &otherCandidate : *otherList.candidates) {
+    for (const auto& otherCandidate : *otherList.candidates) {
         candidates->push_back(otherCandidate);
     }
 }
@@ -18,7 +20,7 @@ CandidateList& CandidateList::operator=(const CandidateList& otherList) {
             candidates = new vector<CandidateType>;
         }
 
-        for (const auto &otherCandidate : *otherList.candidates) {
+        for (const auto& otherCandidate : *otherList.candidates) {
             candidates->push_back(otherCandidate);
         }
     } else {
@@ -33,17 +35,16 @@ bool CandidateList::isEmpty() const {
 }
 
 bool CandidateList::searchCandidate(int ssn) const {
-    vector<CandidateType>::const_iterator vecIter;
+    vecConstIter vecIter;
     return searchCandidateList(ssn, vecIter);
 }
 
 bool CandidateList::searchCandidateList(int ssn,
-                                        vector<CandidateType>::const_iterator& vecIter)
+                                        vecConstIter& vecIter)
                                         const {
     vecIter = candidates->begin();
     bool found = false;
-    while (!found && vecIter != candidates->end())
-    {
+    while (!found && vecIter != candidates->end()) {
         if (vecIter->getSSN() == ssn) {
             found = true;
         } else {
@@ -62,14 +63,14 @@ void CandidateList::addCandidate(const CandidateType &c) const {
 }
 
 int CandidateList::getWinner() const {
-    vector<CandidateType>::const_iterator vecIter;
+    vecConstIter vecIter;
 
     // max <= first element to save a bit of time
-    vector<CandidateType>::const_iterator iterWithHighestNumOfVotes = candidates->begin();
+    vecConstIter iterWithHighestNumOfVotes = candidates->begin();
     int max = iterWithHighestNumOfVotes->getTotalVotes();
 
     // vecIter can then start on the element after
-    for (vecIter = candidates->begin() + 1; vecIter != candidates->end(); vecIter++) {
+    for (vecIter = ++candidates->begin(); vecIter != candidates->end(); vecIter++) {
         if (vecIter->getTotalVotes() > max) {
             iterWithHighestNumOfVotes = vecIter;
         }
@@ -79,19 +80,19 @@ int CandidateList::getWinner() const {
 }
 
 void CandidateList::printCandidateName(int ssn) const {
-    vector<CandidateType>::const_iterator vecIter;
+    vecConstIter vecIter;
     if (searchCandidateList(ssn, vecIter))
         vecIter->printName();
 }
 
 void CandidateList::printAllCandidates() const {
-    for (const auto &candidate : *candidates) {
+    for (const auto& candidate : *candidates) {
         candidate.printCandidateInfo();
     }
 }
 
 void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) const {
-    vector<CandidateType>::const_iterator vecIter;
+    vecConstIter vecIter;
     if (searchCandidateList(ssn, vecIter)) {
         cout << "Division " << divisionNumber
              << ": " << vecIter->getVotesByDivision(divisionNumber)
@@ -100,14 +101,14 @@ void CandidateList::printCandidateDivisionVotes(int ssn, int divisionNumber) con
 }
 
 void CandidateList::printCandidateTotalVotes(int ssn) const {
-    vector<CandidateType>::const_iterator vecIter;
+    vecConstIter vecIter;
     if (searchCandidateList(ssn, vecIter))
         cout << "Total Votes: " << vecIter->getTotalVotes() << endl;
 }
 
 void CandidateList::printFinalResults() const {
     map<int, string> votesAndNames;
-    for (const auto &candidate : *candidates) {
+    for (const auto& candidate : *candidates) {
         votesAndNames.insert(
             pair<int, string>(
             candidate.getTotalVotes(),
