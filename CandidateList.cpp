@@ -38,8 +38,8 @@ bool CandidateList::searchCandidate(int ssn) const {
 }
 
 bool CandidateList::searchCandidateList(int ssn,
-    vector<CandidateType>::const_iterator& vecIter)
-    const {
+                                        vector<CandidateType>::const_iterator& vecIter)
+                                        const {
     vecIter = candidates->begin();
     bool found = false;
     while (!found && vecIter != candidates->end())
