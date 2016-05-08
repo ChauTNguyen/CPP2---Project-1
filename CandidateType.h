@@ -11,21 +11,31 @@ const int NUM_OF_DIVISIONS = 4;
 
 class CandidateType : public PersonType {
 public:
-    CandidateType();
+    CandidateType(); // default constructor
 
+    // Function updateVotesByDivision()
     void updateVotesByDivision(int divisionNumber, int newNumOfVotes);
+
+    // Function getTotalVotes()
     int getTotalVotes() const;
+
+    // Function getVotesByDivision()
     int getVotesByDivision(int divisionNumber) const;
 
+    // Function printCandidateInfo()
     void printCandidateInfo() const;
+
+    // Function printCandidateTotalVotes()
     void printCandidateTotalVotes() const;
+
+    // Function printCandidateDivisionVotes()
     void printCandidateDivisionVotes(int divisionNumber) const;
 
-    ~CandidateType();
+    ~CandidateType(); // deconstructor
 
 private:
     int totalNumOfVotes;
-    int array[NUM_OF_DIVISIONS];
+    int array[NUM_OF_DIVISIONS]; // does this have to be a dynamic array?
 };
 
 #endif //PROJECT_CANDIDATETYPE_H
