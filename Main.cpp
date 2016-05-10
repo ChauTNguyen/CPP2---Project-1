@@ -71,13 +71,13 @@ void processChoice(CandidateList &candidateList) {
 
             // Print a candidates's division votes
         case 2:
-            cout << "\nEnter candidate's social security number (no dashes): ";
-            cin >> ssn;
-            cout << endl;
-
             if (candidateList.isEmpty()) {
                 cerr << "List is empty." << endl;
             } else {
+                cout << "\nEnter candidate's social security number (no dashes): ";
+                cin >> ssn;
+                cout << endl;
+
                 if (candidateList.searchCandidate(ssn)) {
                     candidateList.printCandidateName(ssn);
                     cout << endl;
@@ -94,13 +94,13 @@ void processChoice(CandidateList &candidateList) {
 
             // Print a candidate's total votes
         case 3:
-            cout << "\nEnter candidate's social security number (no dashes): ";
-            cin >> ssn;
-            cout << endl;
-
             if (candidateList.isEmpty()) {
                 cerr << "List is empty." << endl;
             }  else {
+                cout << "\nEnter candidate's social security number (no dashes): ";
+                cin >> ssn;
+                cout << endl;
+
                 if (candidateList.searchCandidate(ssn)) {
                     candidateList.printCandidateName(ssn);
                     cout << endl;
