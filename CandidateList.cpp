@@ -63,8 +63,9 @@ int CandidateList::getWinner() const {
     int max = iterWithHighestNumOfVotes->getTotalVotes();
 
     // vecIter can then start on the element after
-    for (vecIter = ++candidates->begin(); vecIter != candidates->end(); vecIter++) {
+    for (vecIter = ++(candidates->begin()); vecIter != candidates->end(); vecIter++) {
         if (vecIter->getTotalVotes() > max) {
+            max = vecIter->getTotalVotes();
             iterWithHighestNumOfVotes = vecIter;
         }
     }
@@ -100,6 +101,7 @@ void CandidateList::printCandidateTotalVotes(int ssn) const {
 }
 
 void CandidateList::printFinalResults() const {
+    // copies vector object properties into map
     map<int, string> votesAndNames;
     for (const auto& candidate : *candidates) {
         votesAndNames.insert(
@@ -109,6 +111,8 @@ void CandidateList::printFinalResults() const {
             );
     }
 
+    cout << "\nFINAL RESULTS" << "\n-----------" << endl;
+    // prints formatted results
     map<int, string>::const_reverse_iterator mapIter;
     int count = 1; // to display the row number
     for (mapIter = votesAndNames.rbegin(); mapIter != votesAndNames.rend(); ++mapIter) {
