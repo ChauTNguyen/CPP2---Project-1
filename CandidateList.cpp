@@ -40,15 +40,13 @@ bool CandidateList::searchCandidateList(int ssn,
     while (!found && vecIter != candidates->end()) {
         if (vecIter->getSSN() == ssn) {
             found = true;
-        } else {
+        }
+        else {
             vecIter++;
         }
     }
 
-    if (found)
-        return true;
-    else
-        return false;
+    return found;
 }
 
 void CandidateList::addCandidate(const CandidateType &c) const {
